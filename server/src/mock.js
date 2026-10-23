@@ -24,13 +24,8 @@ export function mockItinerary({ query, origin }) {
       summary:
         'A gentle lakeside trail with views of Mt. Nantai, finishing at a sulfur-spring onsen. Mostly flat, well marked, and reachable by bus from Tobu-Nikko Station. [MOCK DATA — replaced by the ADDIX editorial passage in live mode]',
       gear: ['Light hiking shoes', 'Wind layer (lake is ~8°C cooler than Tokyo)', 'Towel for the onsen', 'IC card for the bus'],
-      figures: [
-        {
-          url: 'https://placehold.co/960x600/1f3a2e/f4e9d8?text=Editorial+photo+(include_figures)',
-          caption: 'Placeholder — the magazine photo appears here in live mode',
-          credit: 'ADDIX / Randonnée (mock)',
-        },
-      ],
+      // No editorial photo in mock mode — the web app falls back to a Google Places photo.
+      figures: [],
       citation: {
         magazine: 'Randonnée',
         publisher: 'ADDIX',
