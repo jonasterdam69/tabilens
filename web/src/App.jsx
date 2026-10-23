@@ -3,8 +3,6 @@ import { api } from './api.js';
 import QueryInput from './components/QueryInput.jsx';
 import SpotCard from './components/SpotCard.jsx';
 import TimetableWidget from './components/TimetableWidget.jsx';
-import AudioPlayer from './components/AudioPlayer.jsx';
-import PipelineTrace from './components/PipelineTrace.jsx';
 import MapView from './components/MapView.jsx';
 import WeatherCard from './components/WeatherCard.jsx';
 
@@ -58,8 +56,6 @@ export default function App() {
             <div className="space-y-6 lg:col-span-2">
               <WeatherCard weather={plan.weather} />
               <TimetableWidget transit={plan.transit} />
-              <AudioPlayer audio={plan.audio} />
-              <PipelineTrace trace={plan.trace} billing={plan.billing} mode={plan.mode} />
             </div>
           </div>
         )}
