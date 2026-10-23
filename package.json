@@ -4,6 +4,9 @@
   "version": "0.1.0",
   "description": "TabiLens (旅レンズ) — Autonomous editorial day-trip & transit copilot",
   "workspaces": ["server", "web"],
+  "engines": {
+    "node": ">=22.9"
+  },
   "scripts": {
     "dev": "concurrently -n api,web -c cyan,magenta \"npm run dev -w server\" \"npm run dev -w web\"",
     "build": "npm run build -w web",

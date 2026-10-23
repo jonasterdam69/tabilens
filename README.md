@@ -108,6 +108,17 @@ The server still runs the Chronicle audio search in live mode and returns `audio
 
 `npm run build && npm start` serves the built frontend from the API on :8787 — one process, one URL for the live demo.
 
+## Deploy on Render
+
+`render.yaml` sets up one free Render web service in mock mode (no Redpine credits):
+
+1. On [render.com](https://render.com), sign in with GitHub and choose **New → Blueprint**.
+2. Connect this repo, and paste your Google Maps browser key when asked for `VITE_GOOGLE_MAPS_API_KEY`.
+3. When the deploy finishes, open the `https://<name>.onrender.com` link Render shows.
+4. In Google Cloud Console → Credentials → your key, add `https://<name>.onrender.com/*` to the allowed websites, so the map and photo load there.
+
+Every push to `main` redeploys. The key is built into the page, so after changing it, choose **Manual Deploy** in Render. On the free plan the service sleeps when idle, so the first visit after a while takes about a minute.
+
 ## Next steps
 
 - Wire live tool responses into `normalize.js`
