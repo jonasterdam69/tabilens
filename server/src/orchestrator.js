@@ -8,6 +8,7 @@ import { parseIntent } from './intent.js';
 import { mockItinerary } from './mock.js';
 import * as norm from './normalize.js';
 import { wikiSummary, placeQueries } from './wikipedia.js';
+import { weatherPin, fetchForecast } from './weather.js';
 
 async function timed(trace, step, fn) {
   const t0 = Date.now();
@@ -95,17 +96,9 @@ export async function planTrip({ query, origin = 'Asakusa' }) {
 
 // ---- 5. Weather at the destination (Open-Meteo is free, so mock mode uses it too) ----
 async function withWeather(existing, trace) {
-  const pin = existing.places?.find((p) => p.kind === 'spot' && p.lat != null)
-    ?? existing.places?.find((p) => p.kind === 'station' && p.lat != null);
+  const pin = weatherPin(existing.places);
   if (!pin) return { ...existing, weather: null };
-  const { lat, lng } = pin;
-
-  const weatherRaw = await timed(trace, 'weather.forecast', () =>
-    // Redpine tool:  redpine.callTool(config.tools.weather, { lat, lng })
-    // Outside API:
-    fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lng}&daily=temperature_2m_max,precipitation_probability_max&forecast_days=16&timezone=Asia/Tokyo`)
-      .then((r) => r.json())
-  );
+  const weatherRaw = await timed(trace, 'weather.forecast', () => fetchForecast(pin));
   const weather = norm.weatherFrom(weatherRaw);
   return { ...existing, weather };
 }

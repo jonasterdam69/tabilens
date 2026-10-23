@@ -1,6 +1,8 @@
 // English Wikipedia lookups: destination history and the topic explorer.
-// Free and keyless; Wikimedia asks API clients to send a descriptive User-Agent.
-const HEADERS = { 'User-Agent': 'TabiLens/0.1 (hackathon demo; https://github.com/jonasterdam69/tabilens)' };
+// Free and keyless. Runs on the server and, for the GitHub Pages build, in the browser.
+// Wikimedia asks clients to identify themselves; browsers can't set User-Agent, so they send Api-User-Agent.
+const AGENT = 'TabiLens/0.1 (hackathon demo; https://github.com/jonasterdam69/tabilens)';
+const HEADERS = typeof window === 'undefined' ? { 'User-Agent': AGENT } : { 'Api-User-Agent': AGENT };
 
 async function getJson(url) {
   const r = await fetch(url, { headers: HEADERS });
@@ -8,9 +10,9 @@ async function getJson(url) {
   return r.json();
 }
 
-// MediaWiki action API (search, geosearch, descriptions).
+// MediaWiki action API (search, geosearch, descriptions). origin=* allows calls from a browser.
 function actionApi(params) {
-  const qs = new URLSearchParams({ action: 'query', format: 'json', formatversion: '2', ...params });
+  const qs = new URLSearchParams({ action: 'query', format: 'json', formatversion: '2', origin: '*', ...params });
   return getJson(`https://en.wikipedia.org/w/api.php?${qs}`);
 }
 

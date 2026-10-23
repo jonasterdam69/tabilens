@@ -1,3 +1,5 @@
+import { staticApi } from './lib/staticApi.js';
+
 async function req(path, opts) {
   const res = await fetch(path, opts);
   const body = await res.json().catch(() => ({}));
@@ -8,7 +10,8 @@ async function req(path, opts) {
 const qs = (params) =>
   new URLSearchParams(Object.entries(params).filter(([, v]) => v !== undefined && v !== null && v !== '')).toString();
 
-export const api = {
+// The GitHub Pages build has no server, so it runs the mock API in the browser.
+export const api = import.meta.env.VITE_STATIC === 'true' ? staticApi : {
   health: () => req('/api/health'),
   explore: ({ title, name, area, lat, lng }) => req(`/api/explore?${qs({ title, name, area, lat, lng })}`),
   nearby: (lat, lng) => req(`/api/nearby?${qs({ lat, lng })}`),

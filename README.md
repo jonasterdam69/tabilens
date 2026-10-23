@@ -108,6 +108,17 @@ The server still runs the Chronicle audio search in live mode and returns `audio
 
 `npm run build && npm start` serves the built frontend from the API on :8787 — one process, one URL for the live demo.
 
+## Deploy on GitHub Pages (mock mode)
+
+The workflow in `.github/workflows/pages.yml` builds a static version on every push to `main` and publishes it at `https://<user>.github.io/<repo>/`. GitHub Pages can't run the Express server, so this build (`VITE_STATIC=true`) runs the mock routes, weather and Wikipedia lookups in the browser (`web/src/lib/staticApi.js`, reusing the server's code). Live Redpine mode needs a secret key and stays server-only.
+
+One-time setup:
+
+1. **Settings → Pages → Build and deployment → Source: GitHub Actions.**
+2. **Settings → Secrets and variables → Actions → New repository secret**: `VITE_GOOGLE_MAPS_API_KEY` with your Maps browser key.
+3. In Google Cloud Console, allow `https://<user>.github.io/*` on that key.
+4. **Actions → Deploy to GitHub Pages → Run workflow** (or push to `main`).
+
 ## Deploy on Render
 
 `render.yaml` sets up one free Render web service in mock mode (no Redpine credits):
