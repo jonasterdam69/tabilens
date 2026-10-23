@@ -134,7 +134,7 @@ async function resolveCoords(places, geocoder) {
 }
 
 // Universal Maps URL — works without an API key and opens the app on phones.
-function buildDirectionsUrl(places) {
+export function buildDirectionsUrl(places) {
   const pts = places.filter((p) => Number.isFinite(p.lat) && Number.isFinite(p.lng));
   if (pts.length < 2) return null;
   const fmt = (p) => `${p.lat},${p.lng}`;
