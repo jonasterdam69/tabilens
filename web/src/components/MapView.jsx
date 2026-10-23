@@ -24,7 +24,8 @@ export default function MapView({ places = [] }) {
     (async () => {
       try {
         await loadGoogleMaps(API_KEY);
-        const { Map, Polyline, LatLngBounds } = await google.maps.importLibrary('maps');
+        const { Map, Polyline } = await google.maps.importLibrary('maps');
+        const { LatLngBounds } = await google.maps.importLibrary('core');
         const { AdvancedMarkerElement, PinElement } = await google.maps.importLibrary('marker');
         const { Geocoder } = await google.maps.importLibrary('geocoding');
         if (cancelled) return;
